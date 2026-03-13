@@ -1,0 +1,39 @@
+#!/dssg/home/cln19/anaconda3/envs/gsml/bin/python
+# coding: utf-8
+# Author：Shen Yi
+# Date ：2022/5/4 5:15
+
+import sys
+import os
+
+import click
+import command
+
+
+@click.group(context_settings=dict(help_option_names=['-h', '--help']))
+def cli():
+    pass
+
+
+cli = click.CommandCollection(sources=[cli,
+                                       command.cli_h2o_automl,
+                                       command.cli_model_stat,
+                                       command.cli_predict,
+                                       command.cli_split_dataset,
+                                       command.cli_train,
+                                       command.cli_pipe_h2o_train_by_dataset_split,
+                                       command.cli_partition_dataset,
+                                       command.cli_h2o_automl_too_two_layer,
+                                       command.cli_get_features,
+                                       command.cli_model_select,
+                                       command.cli_tabulate,
+                                       command.cli_pipe_combine_best_model,
+                                       command.cli_model_varimp,
+                                       command.cli_generate_features,
+                                       command.cli_search_bam,
+                                       command.cli_hyper_tuning,
+                                       ])
+
+if __name__ == '__main__':
+    cli()
+
