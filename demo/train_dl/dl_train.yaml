@@ -1,0 +1,74 @@
+# 深度学习模型训练配置文件
+
+# 必选参数
+network: "cnn_2conv_3fc"  # 选择网络模型结构. [cnn_2conv_3fc]
+train_algo: "default"  #  训练算法 [default]
+num_classes: 2  # 分类类别数. 多分类填写类别数, 二分类填写2
+na_strategy: "mean"  # 缺失值填充策略。 [mean, median, most_frequent, constant]
+scale_algo: "minmax"  # 特征缩放算法. [minmax, zscore, robust, maxabs]
+
+# 模型相关参数
+model__conv1_out: 16  # 第一个卷积层输出通道数
+model__conv1_ks: 3  # 第一个卷积层卷积核大小
+model__conv1_st: 1  # 第一个卷积层步长
+model__conv1_bias: true  # 第一个卷积层是否使用偏置
+model__conv1_drop: 0.0  # 第一个卷积层dropout概率
+model__pool1_ks: 2  # 第一个池化层核大小
+model__pool1_st: 2  # 第一个池化层步长
+
+model__conv2_out: 64  # 第二个卷积层输出通道数
+model__conv2_ks: 3  # 第二个卷积层卷积核大小
+model__conv2_st: 1  # 第二个卷积层步长
+model__conv2_bias: true  # 第二个卷积层是否使用偏置
+model__conv2_drop: 0.0  # 第二个卷积层dropout概率
+model__pool2_ks: 2  # 第二个池化层核大小
+model__pool2_st: 2  # 第二个池化层步长
+
+model__fc1_size: 2048  # 第一个全连接层大小
+model__fc1_drop: 0.4  # 第一个全连接层dropout概率
+model__fc2_size: 1024  # 第二个全连接层大小
+model__fc2_drop: 0.0  # 第二个全连接层dropout概率
+model__fc3_size: 64  # 第三个全连接层大小
+model__fc3_drop: 0.0  # 第三个全连接层dropout概率
+
+# 学习率相关参数
+lr_algo: "adam"  # 学习率优化算法.  [adam, sgd, rmsprop]
+lr_weight_decay: 0.00001  # 权重衰减
+lr: 0.0001  # 默认学习率, 如果下面的层不指定，则使用默认学习率. 参数必须
+frozen_conv1: False  # 冻结第一个卷积层. 分布训练时使用
+frozen_conv2: False # 冻结第二个卷积层. 分布训练时使用
+frozen_fc1: False # 冻结第一个全连接层. 分布训练时使用
+frozen_fc2: False # 冻结第二个全连接层. 分布训练时使用
+frozen_fc3: False # 冻结第三个全连接层. 分布训练时使用
+frozen_class_classifier: False # 冻结分类器
+
+# 优化器调度器参数
+lr_scheduler_algo: "reducelr"  # 优化器调度器算法. [none, steplr, reducelr]
+steplr_step_size: 30  # 学习率衰减周期, 仅在algo为steplr时有效
+steplr_gamma: 0.1  # 学习率衰减因子, 仅在algo为steplr时有效
+reducelr_mode: "min"  # 学习率调度模式, 仅在algo为reducelr时有效. [min, max]
+
+# 损失函数相关参数
+loss_func: "cross_entropy"  # 损失函数  [cross_entropy]
+loss_weights: '1'  # 初始损失函数权重
+
+# 模型训练参数
+batch_size: 100  # 批大小
+num_epochs: 20  # 训练周期
+early_stop_strategy: "Valid_acc,20,max,0.01"  # 早停指标
+output_metric: "Valid_acc_0_max|R01B_acc_0_max"  # 输出指标
+
+
+#loss__cols: "Response,csa,r01b"  # 损失函数计算列
+#loss__weights: '0.4,0.3,0.3'  # 初始损失函数权重.
+#loss__get__algos: "cross_entropy,csa,csa"  # loss由多个组成，所以会用不同的算法
+#loss__get__dann_num_domain: 2  # DANN域数
+#loss__get__dann_fc1: 128  # DANN第一个全连接层大小
+#loss__get__dann_drop1: 0.0  # DANN第一个全连接层dropout概率
+#loss__get__dann_fc2: 64  # DANN第二个全连接层大小
+#loss__get__dann_alpha: 1.0  # 控制梯度反转强度
+
+## 损失函数权重调节器
+#loss__weight__scheduler__algo: "dwa"  # 损失函数权重调节器算法
+#loss__weight__scheduler__end_weights: "0.5,0.2,0.1"  # 最终损失函数权重
+#

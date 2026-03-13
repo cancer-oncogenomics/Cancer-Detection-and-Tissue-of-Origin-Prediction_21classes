@@ -1,0 +1,60 @@
+# 超参搜索的参数
+network: {value: ["cnn_2conv_3fc"], distribution: choice}  # 选择网络模型结构
+train_algo: {value: ["default"], distribution: choice}  # 选择网络模型结构
+num_classes: {value: [2], distribution: choice}  # 分类类别数
+na_strategy: {value: ["mean"], distribution: choice}  # 缺失值填充策略
+scale_algo: {value: ["minmax"], distribution: choice}  # 特征缩放算法
+
+model__conv1_out: {value: [16, 32], distribution: choice}  # 第一个卷积层输出通道数
+model__conv1_ks: {value: [1, 2, 3], distribution: choice}  # 第一个卷积层卷积核大小
+model__conv1_st: {value: [1, 2], distribution: choice}  # 第一个卷积层步长
+model__conv1_bias: {value: [true], distribution: choice}  # 第一个卷积层是否使用偏置
+model__conv1_drop: {value: [0.0, 0.4], distribution: uniform}  # 第一个卷积层dropout概率
+model__pool1_ks: {value: [1, 3], distribution: choice}  # 第一个池化层核大小
+model__pool1_st: {value: [1, 3], distribution: choice}  # 第一个池化层步长
+
+model__conv2_out: {value: [32, 64], distribution: choice}  # 第二个卷积层输出通道数
+model__conv2_ks: {value: [1, 2, 3], distribution: choice}  # 第二个卷积层卷积核大小
+model__conv2_st: {value: [1, 2], distribution: choice}  # 第二个卷积层步长
+model__conv2_bias: {value: [true], distribution: choice}  # 第二个卷积层是否使用偏置
+model__conv2_drop: {value: [0.0, 0.4], distribution: uniform}  # 第二个卷积层dropout概率
+model__pool2_ks: {value: [1, 3], distribution: choice}  # 第二个池化层核大小
+model__pool2_st: {value: [1, 3], distribution: choice}  # 第二个池化层步长
+
+model__fc1_size: {value: [1024, 2048], step: 16, distribution: quniform}  # 第一个全连接层大小
+model__fc1_drop: {value: [0.0, 0.4], distribution: uniform}  # 第一个全连接层dropout概率
+model__fc2_size: {value: [512, 1024], step: 16, distribution: quniform}  # 第二个全连接层大小
+model__fc2_drop: {value: [0.0, 0.4], distribution: uniform}  # 第二个全连接层dropout概率
+model__fc3_size: {value: [64, 256], step: 16, distribution: quniform}  # 第三个全连接层大小
+model__fc3_drop: {value: [0.0, 0.4], distribution: uniform}  # 第三个全连接层dropout概率
+
+lr_algo: {value: ["adam"], distribution: choice}  # 优化器算法
+lr_weight_decay: {value: [0.0001, 0.001], step: 0.0001, distribution: quniform}  # 权重衰减
+lr: {value: [0.0001, 0.001], step: 0.0001, distribution: quniform}  # 默认学习率, 如果下面的层不指定，则使用默认学习率. 参数必须
+
+lr_scheduler_algo: {value: ["reducelr"], distribution: choice}  # 优化器调度器算法, none表示不用
+steplr_step_size: {value: [30], distribution: choice}  # 学习率衰减周期, 仅在algo为steplr时有效
+steplr_gamma: {value: [0.1], distribution: choice}  # 学习率衰减因子, 仅在algo为steplr时有效
+reducelr_mode: {value: ["min"], distribution: choice}  # 学习率调度模式, 仅在algo为reducelr时有效
+
+loss_func: {value: ["cross_entropy"], distribution: choice}  # 损失函数
+loss_weights: {value: ["1"], distribution: choice}  # 初始损失函数权重.
+
+batch_size: {value: [50,100,150,200,250], distribution: choice}  # 批大小
+num_epochs: {value: [20, 50, 100, 200, 500, 1000], distribution: choice}  # 训练周期
+early_stop_strategy: {value: ["Valid_acc,30,max,0.01"], distribution: choice}  # 早停指标
+output_metric: {value: ["Valid_acc_0.9_max|R01B_acc_0.6_max"], distribution: choice}  # 早停指标
+
+
+
+#loss__get__algos: {value: ["cross_entropy,csa,cross_entropy"], distribution: choice}  # loss由多个组成，所以会用不同的算法
+#loss__get__dann_num_domain: {value: [2], distribution: choice}  # DANN域数
+#loss__get__dann_fc1: {value: [128], distribution: choice}  # DANN第一个全连接层大小
+#loss__get__dann_drop1: {value: [0.0], distribution: choice}  # DANN第一个全连接层dropout概率
+#loss__get__dann_fc2: {value: [64], distribution: choice}  # DANN第二个全连接层大小
+#loss__get__dann_alpha: {value: [1.0], distribution: choice}  # 控制梯度反转强度
+#
+#loss__weight__scheduler__algo: {value: ["dwa", "none"], distribution: choice}  # 损失函数权重调节器算法
+#loss__weight__scheduler__end_weights: {value: ["0.5,0.2,0.1"], distribution: choice}  # 最终损失函数权重
+
+

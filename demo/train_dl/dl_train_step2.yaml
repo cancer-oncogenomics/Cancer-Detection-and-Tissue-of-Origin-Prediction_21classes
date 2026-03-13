@@ -1,0 +1,34 @@
+# 深度学习模型训练配置文件
+
+# 必选参数
+train_algo: "default"  #  训练算法
+
+# 模型相关参数
+m_update__conv1_drop: 0.0  # 第一个卷积层dropout概率
+m_update__conv2_drop: 0.0  # 第二个卷积层dropout概率
+m_update__fc1_drop: 0.4  # 第一个全连接层dropout概率
+m_update__fc2_drop: 0.0  # 第二个全连接层dropout概率
+m_update__fc3_drop: 0.0  # 第三个全连接层dropout概率
+
+# 学习率相关参数
+lr_algo: "adam"  # 优化器算法
+lr_weight_decay: 0.00001  # 权重衰减
+lr: 0.0001  # 默认学习率, 如果下面的层不指定，则使用默认学习率. 参数必须
+
+
+# 优化器调度器参数
+lr_scheduler_algo: "reducelr"  # 优化器调度器算法, none表示不用
+steplr_step_size: 30  # 学习率衰减周期, 仅在algo为steplr时有效
+steplr_gamma: 0.1  # 学习率衰减因子, 仅在algo为steplr时有效
+reducelr_mode: "min"  # 学习率调度模式, 仅在algo为reducelr时有效
+
+# 损失函数相关参数
+loss_func: "cross_entropy"  # 损失函数
+loss_weights: '1'  # 初始损失函数权重
+
+# 模型训练参数
+batch_size: 100  # 批大小
+num_epochs: 20  # 训练周期
+early_stop_strategy: "Valid_acc,20,max,0.01"  # 早停指标
+#output_metric: "Valid_acc_0.9_max|R01B_acc_0.6_max"  # 输出指标
+output_metric: "Valid_acc_0_max|R01B_acc_0_max"  # 输出指标
